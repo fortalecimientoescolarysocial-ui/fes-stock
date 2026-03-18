@@ -584,6 +584,7 @@ body.light{
       <span>Sistema de Gestión</span>
       Dashboard
     </div>
+    <span id="sync-status" style="font-size:11px;white-space:nowrap;color:var(--text-2)">Cargando…</span>
 
     <!-- BÚSQUEDA GLOBAL -->
     <div style="position:relative;flex:1;max-width:340px" id="global-search-wrap">
@@ -1183,14 +1184,79 @@ const PER_PAGE = 12;
 let dashSort = {col:'nombre', dir:'asc'};
 
 // ═══════════════════════════════════════
-// PERSISTENCE
+// PERSISTENCE — Google Sheets como base de datos
 // ═══════════════════════════════════════
-function save(){localStorage.setItem('fes_stock_v3', JSON.stringify(db))}
-function load(){
-  localStorage.removeItem('fes_stock_v3');
-  localStorage.removeItem('fes_stock');
-  seedData();
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxAW_4yu-OJV3dFfDhn47MetZri45yOWBMdlCUN06OQb0auSWscwBsLb5_9m-qL2Ssa/exec';
+let _saveTimeout = null;
+
+function setSyncStatus(estado){
+  const el = document.getElementById('sync-status');
+  if(!el) return;
+  const estados = {
+    guardando: {txt:'Guardando…',    color:'var(--amber)',  icon:'⟳'},
+    ok:        {txt:'Sincronizado ✓', color:'var(--teal)',   icon:''},
+    error:     {txt:'Sin conexión ⚠', color:'var(--red)',    icon:''},
+    cargando:  {txt:'Cargando…',     color:'var(--text-2)', icon:'⟳'},
+  };
+  const e = estados[estado] || estados.ok;
+  el.textContent = e.txt;
+  el.style.color = e.color;
 }
+
+function save(){
+  // Guardar local inmediatamente para no perder datos
+  localStorage.setItem('fes_stock_v3', JSON.stringify(db));
+  // Debounce: esperar 800ms antes de subir a la nube (evita muchas llamadas seguidas)
+  clearTimeout(_saveTimeout);
+  _saveTimeout = setTimeout(()=>syncToSheet(), 800);
+}
+
+function syncToSheet(){
+  setSyncStatus('guardando');
+  fetch(SHEET_URL, {
+    method:'POST',
+    body: JSON.stringify(db),
+  })
+  .then(r=>r.text())
+  .then(()=>setSyncStatus('ok'))
+  .catch(()=>{
+    setSyncStatus('error');
+    toast('Sin conexión — los datos se guardaron localmente','warning');
+  });
+}
+
+function load(){
+  setSyncStatus('cargando');
+  // Cargar local primero para mostrar algo rápido
+  const raw = localStorage.getItem('fes_stock_v3');
+  if(raw){ try{ const d=JSON.parse(raw); db.categorias=d.categorias||[]; db.productos=d.productos||[]; db.ingresos=d.ingresos||[]; db.salidas=d.salidas||[]; }catch(e){} }
+  if(!db.categorias.length) seedData();
+  navigate('dashboard');
+
+  // Luego buscar la versión más reciente de la nube
+  fetch(SHEET_URL)
+  .then(r=>r.json())
+  .then(d=>{
+    if(d && d.categorias && d.categorias.length){
+      db.categorias = d.categorias;
+      db.productos  = d.productos  || [];
+      db.ingresos   = d.ingresos   || [];
+      db.salidas    = d.salidas    || [];
+      localStorage.setItem('fes_stock_v3', JSON.stringify(db));
+      navigate('dashboard');
+      setSyncStatus('ok');
+      toast('Datos sincronizados desde la nube ☁','success');
+    } else {
+      // La nube está vacía — subir los datos locales
+      syncToSheet();
+    }
+  })
+  .catch(()=>{
+    setSyncStatus('error');
+    toast('Trabajando sin conexión — datos locales cargados','warning');
+  });
+}
+
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 
 // ═══════════════════════════════════════
@@ -2525,7 +2591,6 @@ if(localStorage.getItem('fes_theme')==='light'){
   const lbl=document.getElementById('theme-label');
   if(lbl) lbl.textContent='Modo oscuro';
 }
-navigate('dashboard');
 </script>
 </body>
 </html>
