@@ -361,6 +361,98 @@ td.actions{display:flex;gap:4px;align-items:center}
 .stock-indicator .s-num{
   font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;
 }
+/* STOCK WARNING BANNER */
+.stock-warning-banner{
+  display:none;
+  align-items:center;gap:10px;
+  padding:12px 16px;border-radius:8px;
+  background:var(--red-light);border:1px solid rgba(240,101,122,.35);
+  margin-bottom:10px;font-size:13px;color:var(--red);
+  animation:fadeIn .2s ease;
+}
+.stock-warning-banner svg{flex-shrink:0}
+.stock-warning-banner strong{color:var(--text);font-weight:600}
+/* SEARCH CLEAR BUTTON */
+.search-wrap .search-clear{
+  position:absolute;right:8px;background:none;border:none;cursor:pointer;
+  color:var(--text-3);font-size:16px;line-height:1;padding:2px 4px;
+  border-radius:4px;display:none;transition:color .15s;
+}
+.search-wrap .search-clear:hover{color:var(--text)}
+.search-wrap input:not(:placeholder-shown) ~ .search-clear{display:block}
+
+/* ── CONFIG PANEL ── */
+.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.config-logo-box{
+  border:2px dashed var(--border-md);border-radius:var(--radius-lg);
+  padding:24px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;cursor:pointer;transition:all .2s;
+  background:var(--surface-2);min-height:120px;position:relative;
+}
+.config-logo-box:hover{border-color:var(--gold);background:var(--gold-light)}
+.config-logo-box img{max-height:64px;max-width:180px;object-fit:contain;border-radius:6px}
+.config-logo-label{font-size:12px;color:var(--text-2);text-align:center;line-height:1.4}
+.config-logo-hint{font-size:10px;color:var(--text-3);text-align:center}
+.config-logo-remove{
+  position:absolute;top:8px;right:8px;
+  background:var(--red-light);border:none;cursor:pointer;
+  color:var(--red);border-radius:6px;padding:3px 7px;font-size:12px;
+  display:none;
+}
+.config-logo-box.has-logo .config-logo-remove{display:block}
+.config-preview{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:18px 22px;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;margin-bottom:20px;
+}
+.config-preview-logo{display:flex;align-items:center;gap:12px}
+.config-preview-logo img{height:36px;object-fit:contain}
+.config-preview-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700}
+.config-preview-sub{font-size:10px;color:var(--text-2);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.config-preview-footer{display:flex;align-items:center;gap:10px}
+.config-preview-footer img{height:28px;object-fit:contain}
+.config-preview-org{font-size:12px;font-weight:500;color:var(--text)}
+.config-preview-org span{display:block;font-size:10px;color:var(--text-2)}
+
+/* ── MODO TABS (individual / múltiple) ── */
+.form-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px}
+.form-tab{
+  padding:9px 20px;font-size:13px;font-weight:500;cursor:pointer;
+  border-bottom:2px solid transparent;color:var(--text-2);
+  transition:all .15s;user-select:none;margin-bottom:-1px;
+}
+.form-tab:hover{color:var(--text)}
+.form-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.form-tab-pane{display:none}
+.form-tab-pane.active{display:block}
+
+/* ── TABLA DE ÍTEMS MÚLTIPLES ── */
+.multi-items-wrap{margin-bottom:16px}
+.multi-items-table{width:100%;border-collapse:collapse;margin-bottom:10px}
+.multi-items-table th{
+  padding:8px 10px;text-align:left;font-size:10px;font-weight:600;
+  letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);
+  border-bottom:1px solid var(--border-md);white-space:nowrap;
+}
+.multi-items-table td{padding:6px 6px;vertical-align:middle}
+.multi-items-table tbody tr{border-bottom:1px solid var(--border)}
+.multi-items-table tbody tr:last-child{border-bottom:none}
+.multi-item-select{width:100%;min-width:120px}
+.multi-item-qty{width:80px}
+.multi-item-stock{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+  padding:4px 8px;border-radius:6px;background:var(--surface-3);
+  white-space:nowrap;display:inline-block;min-width:36px;text-align:center;
+}
+.multi-summary{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:8px;font-size:13px;color:var(--text-2);
+}
+.multi-summary strong{color:var(--text);font-weight:600}
+.multi-error-row td{
+  padding:4px 10px;font-size:12px;color:var(--red);background:var(--red-light);
+}
 
 /* ── MODAL ── */
 .modal-overlay{
@@ -559,6 +651,14 @@ body.light{
       </svg>
       Reportes
     </div>
+    <div class="nav-label">Sistema</div>
+    <div class="nav-item" onclick="navigate('config')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      Configuración
+    </div>
   </nav>
   <div class="sidebar-footer">
     <div class="sidebar-org">
@@ -629,6 +729,7 @@ body.light{
           <div class="search-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" class="search-input" id="dash-search" placeholder="Buscar producto…" oninput="renderDashTable()"/>
+            <button class="search-clear" onclick="document.getElementById('dash-search').value='';renderDashTable()" title="Limpiar búsqueda">×</button>
           </div>
           <select id="dash-cat" onchange="renderDashTable()" style="width:140px">
             <option value="">Todas las categorías</option>
@@ -729,6 +830,7 @@ body.light{
             <div class="search-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" class="search-input" id="prod-search" placeholder="Buscar producto…" oninput="renderProdTable()"/>
+              <button class="search-clear" onclick="document.getElementById('prod-search').value='';renderProdTable()" title="Limpiar búsqueda">×</button>
             </div>
             <select id="prod-cat-filter" onchange="renderProdTable()" style="width:140px">
               <option value="">Todas</option>
@@ -755,46 +857,113 @@ body.light{
           <div class="panel-title"><div class="panel-title-dot" style="background:var(--teal)"></div>Nuevo Ingreso</div>
         </div>
         <div style="padding:22px">
-          <div class="form-grid">
-            <div class="form-row">
-              <label>Categoría</label>
-              <select id="ing-cat" onchange="updateProdSelect('ing')">
-                <option value="">Seleccioná categoría</option>
-              </select>
+          <!-- TABS -->
+          <div class="form-tabs">
+            <div class="form-tab active" id="ing-tab-individual" onclick="switchFormTab('ing','individual')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              Individual
             </div>
-            <div class="form-row">
-              <label>Producto</label>
-              <select id="ing-prod"><option value="">Primero elegí categoría</option></select>
-            </div>
-            <div class="form-row">
-              <label>Cantidad</label>
-              <input type="number" id="ing-qty" min="1" placeholder="0"/>
-            </div>
-            <div class="form-row">
-              <label>Fecha</label>
-              <input type="date" id="ing-fecha"/>
-            </div>
-            <div class="form-row">
-              <label>Lugar / Procedencia</label>
-              <input type="text" id="ing-lugar" list="lugares-list" placeholder="Ej: Almacén Central"/>
-              <datalist id="lugares-list"></datalist>
-            </div>
-            <div class="form-row">
-              <label>Responsable</label>
-              <input type="text" id="ing-resp" list="resp-list-ing" placeholder="Nombre"/>
-              <datalist id="resp-list-ing"></datalist>
-            </div>
-            <div class="form-row span-2">
-              <label>Notas</label>
-              <textarea id="ing-notas" rows="2" placeholder="Observaciones opcionales…" style="resize:vertical"></textarea>
+            <div class="form-tab" id="ing-tab-multi" onclick="switchFormTab('ing','multi')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Carga múltiple
             </div>
           </div>
-          <div class="form-actions">
-            <button class="btn btn-secondary" onclick="clearForm('ing')">Limpiar</button>
-            <button class="btn btn-teal" onclick="saveIngreso()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Registrar Ingreso
-            </button>
+
+          <!-- TAB: INDIVIDUAL -->
+          <div class="form-tab-pane active" id="ing-pane-individual">
+            <div class="form-grid">
+              <div class="form-row">
+                <label>Categoría</label>
+                <select id="ing-cat" onchange="updateProdSelect('ing')">
+                  <option value="">Seleccioná categoría</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Producto</label>
+                <select id="ing-prod"><option value="">Primero elegí categoría</option></select>
+              </div>
+              <div class="form-row">
+                <label>Cantidad</label>
+                <input type="number" id="ing-qty" min="1" placeholder="0"/>
+              </div>
+              <div class="form-row">
+                <label>Fecha</label>
+                <input type="date" id="ing-fecha"/>
+              </div>
+              <div class="form-row">
+                <label>Lugar / Procedencia</label>
+                <input type="text" id="ing-lugar" list="lugares-list" placeholder="Ej: Almacén Central"/>
+                <datalist id="lugares-list"></datalist>
+              </div>
+              <div class="form-row">
+                <label>Responsable</label>
+                <input type="text" id="ing-resp" list="resp-list-ing" placeholder="Nombre"/>
+                <datalist id="resp-list-ing"></datalist>
+              </div>
+              <div class="form-row span-2">
+                <label>Notas</label>
+                <textarea id="ing-notas" rows="2" placeholder="Observaciones opcionales…" style="resize:vertical"></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-secondary" onclick="clearForm('ing')">Limpiar</button>
+              <button class="btn btn-teal" onclick="saveIngreso()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Registrar Ingreso
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB: CARGA MÚLTIPLE -->
+          <div class="form-tab-pane" id="ing-pane-multi">
+            <!-- Campos comunes -->
+            <div class="form-grid" style="margin-bottom:18px">
+              <div class="form-row">
+                <label>Fecha</label>
+                <input type="date" id="ing-multi-fecha"/>
+              </div>
+              <div class="form-row">
+                <label>Lugar / Procedencia</label>
+                <input type="text" id="ing-multi-lugar" list="lugares-list" placeholder="Ej: Almacén Central"/>
+              </div>
+              <div class="form-row">
+                <label>Responsable</label>
+                <input type="text" id="ing-multi-resp" list="resp-list-ing" placeholder="Nombre"/>
+              </div>
+              <div class="form-row">
+                <label>Notas</label>
+                <input type="text" id="ing-multi-notas" placeholder="Observaciones opcionales…"/>
+              </div>
+            </div>
+            <!-- Tabla de ítems -->
+            <div class="multi-items-wrap">
+              <table class="multi-items-table">
+                <thead>
+                  <tr>
+                    <th style="width:170px">Categoría</th>
+                    <th>Producto</th>
+                    <th style="width:90px">Cantidad</th>
+                    <th style="width:36px"></th>
+                  </tr>
+                </thead>
+                <tbody id="ing-multi-tbody"></tbody>
+              </table>
+              <button class="btn btn-secondary btn-sm" onclick="addMultiRow('ing')" style="margin-top:4px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar ítem
+              </button>
+            </div>
+            <div class="multi-summary" id="ing-multi-summary">
+              <span>Ítems: <strong id="ing-multi-count">0</strong></span>
+              <span>Total unidades: <strong id="ing-multi-total">0</strong></span>
+            </div>
+            <div class="form-actions" style="margin-top:14px">
+              <button class="btn btn-secondary" onclick="clearMultiForm('ing')">Limpiar todo</button>
+              <button class="btn btn-teal" onclick="saveMultiIngreso()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Registrar todos los ingresos
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -806,6 +975,7 @@ body.light{
             <div class="search-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" class="search-input" id="ing-search" placeholder="Buscar producto…" oninput="ingPage=1;renderIngTable()"/>
+              <button class="search-clear" onclick="document.getElementById('ing-search').value='';ingPage=1;renderIngTable()" title="Limpiar búsqueda">×</button>
             </div>
             <select id="ing-filter-mes" onchange="renderIngTable()" style="width:110px">
               <option value="">Todo</option>
@@ -843,54 +1013,134 @@ body.light{
           <div class="panel-title"><div class="panel-title-dot" style="background:var(--red)"></div>Nueva Salida</div>
         </div>
         <div style="padding:22px">
-          <div id="sal-stock-info" style="display:none" class="stock-indicator">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            Stock disponible: <span class="s-num" id="sal-stock-num">—</span>
-          </div>
-          <div class="form-grid">
-            <div class="form-row">
-              <label>Categoría</label>
-              <select id="sal-cat" onchange="updateProdSelect('sal'); updateSalStock()">
-                <option value="">Seleccioná categoría</option>
-              </select>
+          <!-- TABS -->
+          <div class="form-tabs">
+            <div class="form-tab active" id="sal-tab-individual" onclick="switchFormTab('sal','individual')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              Individual
             </div>
-            <div class="form-row">
-              <label>Producto</label>
-              <select id="sal-prod" onchange="updateSalStock()"><option value="">Primero elegí categoría</option></select>
-            </div>
-            <div class="form-row">
-              <label>Cantidad</label>
-              <input type="number" id="sal-qty" min="1" placeholder="0" oninput="checkSalQty()"/>
-            </div>
-            <div class="form-row">
-              <label>Fecha</label>
-              <input type="date" id="sal-fecha"/>
-            </div>
-            <div class="form-row">
-              <label>Destino / Lugar</label>
-              <input type="text" id="sal-destino" list="lugares-list" placeholder="Ej: Escuela N°12"/>
-            </div>
-            <div class="form-row">
-              <label>Responsable</label>
-              <input type="text" id="sal-resp" list="resp-list-sal" placeholder="Nombre"/>
-              <datalist id="resp-list-sal"></datalist>
-            </div>
-            <div class="form-row">
-              <label>Receptor / Firma</label>
-              <input type="text" id="sal-receptor" list="receptor-list" placeholder="Quién recibe"/>
-              <datalist id="receptor-list"></datalist>
-            </div>
-            <div class="form-row span-2">
-              <label>Notas</label>
-              <textarea id="sal-notas" rows="2" placeholder="Observaciones opcionales…" style="resize:vertical"></textarea>
+            <div class="form-tab" id="sal-tab-multi" onclick="switchFormTab('sal','multi')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Carga múltiple
             </div>
           </div>
-          <div class="form-actions">
-            <button class="btn btn-secondary" onclick="clearForm('sal')">Limpiar</button>
-            <button class="btn btn-red" onclick="saveSalida()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Registrar Salida
-            </button>
+
+          <!-- TAB: INDIVIDUAL -->
+          <div class="form-tab-pane active" id="sal-pane-individual">
+            <div id="sal-stock-info" style="display:none" class="stock-indicator">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              Stock disponible: <span class="s-num" id="sal-stock-num">—</span>
+            </div>
+            <div id="sal-stock-warning" class="stock-warning-banner">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span id="sal-warning-msg">Stock insuficiente — no se puede registrar esta salida.</span>
+            </div>
+            <div class="form-grid">
+              <div class="form-row">
+                <label>Categoría</label>
+                <select id="sal-cat" onchange="updateProdSelect('sal'); updateSalStock()">
+                  <option value="">Seleccioná categoría</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>Producto</label>
+                <select id="sal-prod" onchange="updateSalStock()"><option value="">Primero elegí categoría</option></select>
+              </div>
+              <div class="form-row">
+                <label>Cantidad</label>
+                <input type="number" id="sal-qty" min="1" placeholder="0" oninput="checkSalQty()"/>
+              </div>
+              <div class="form-row">
+                <label>Fecha</label>
+                <input type="date" id="sal-fecha"/>
+              </div>
+              <div class="form-row">
+                <label>Destino / Lugar</label>
+                <input type="text" id="sal-destino" list="lugares-list" placeholder="Ej: Escuela N°12"/>
+              </div>
+              <div class="form-row">
+                <label>Responsable</label>
+                <input type="text" id="sal-resp" list="resp-list-sal" placeholder="Nombre"/>
+                <datalist id="resp-list-sal"></datalist>
+              </div>
+              <div class="form-row">
+                <label>Receptor / Firma</label>
+                <input type="text" id="sal-receptor" list="receptor-list" placeholder="Quién recibe"/>
+                <datalist id="receptor-list"></datalist>
+              </div>
+              <div class="form-row span-2">
+                <label>Notas</label>
+                <textarea id="sal-notas" rows="2" placeholder="Observaciones opcionales…" style="resize:vertical"></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-secondary" onclick="clearForm('sal')">Limpiar</button>
+              <button class="btn btn-red" id="btn-registrar-salida" onclick="saveSalida()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Registrar Salida
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB: CARGA MÚLTIPLE -->
+          <div class="form-tab-pane" id="sal-pane-multi">
+            <!-- Campos comunes -->
+            <div class="form-grid" style="margin-bottom:18px">
+              <div class="form-row">
+                <label>Fecha</label>
+                <input type="date" id="sal-multi-fecha"/>
+              </div>
+              <div class="form-row">
+                <label>Destino / Lugar</label>
+                <input type="text" id="sal-multi-destino" list="lugares-list" placeholder="Ej: Escuela N°12"/>
+              </div>
+              <div class="form-row">
+                <label>Responsable</label>
+                <input type="text" id="sal-multi-resp" list="resp-list-sal" placeholder="Nombre"/>
+              </div>
+              <div class="form-row">
+                <label>Receptor / Firma</label>
+                <input type="text" id="sal-multi-receptor" list="receptor-list" placeholder="Quién recibe"/>
+              </div>
+              <div class="form-row span-2">
+                <label>Notas</label>
+                <input type="text" id="sal-multi-notas" placeholder="Observaciones opcionales…"/>
+              </div>
+            </div>
+            <!-- Tabla de ítems -->
+            <div class="multi-items-wrap">
+              <table class="multi-items-table">
+                <thead>
+                  <tr>
+                    <th style="width:170px">Categoría</th>
+                    <th>Producto</th>
+                    <th style="width:90px">Cantidad</th>
+                    <th style="width:70px">Stock</th>
+                    <th style="width:36px"></th>
+                  </tr>
+                </thead>
+                <tbody id="sal-multi-tbody"></tbody>
+              </table>
+              <button class="btn btn-secondary btn-sm" onclick="addMultiRow('sal')" style="margin-top:4px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Agregar ítem
+              </button>
+            </div>
+            <div class="multi-summary" id="sal-multi-summary">
+              <span>Ítems: <strong id="sal-multi-count">0</strong></span>
+              <span>Total unidades: <strong id="sal-multi-total">0</strong></span>
+            </div>
+            <div id="sal-multi-global-warning" class="stock-warning-banner" style="margin-top:10px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <span id="sal-multi-warning-msg"></span>
+            </div>
+            <div class="form-actions" style="margin-top:14px">
+              <button class="btn btn-secondary" onclick="clearMultiForm('sal')">Limpiar todo</button>
+              <button class="btn btn-red" id="btn-registrar-multi-salida" onclick="saveMultiSalida()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Registrar todas las salidas
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -902,6 +1152,7 @@ body.light{
             <div class="search-wrap">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <input type="text" class="search-input" id="sal-search" placeholder="Buscar producto…" oninput="salPage=1;renderSalTable()"/>
+              <button class="search-clear" onclick="document.getElementById('sal-search').value='';salPage=1;renderSalTable()" title="Limpiar búsqueda">×</button>
             </div>
             <select id="sal-filter-mes" onchange="renderSalTable()" style="width:110px">
               <option value="">Todo</option>
@@ -1032,6 +1283,122 @@ body.light{
     </div>
   </div>
 </div>
+    <!-- ══ CONFIGURACIÓN ══ -->
+    <div id="sec-config" class="section">
+      <div class="section-header">
+        <div class="section-title"><small>Sistema</small>Configuración</div>
+        <button class="btn btn-primary" onclick="saveConfig()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Guardar cambios
+        </button>
+      </div>
+
+      <!-- PREVIEW EN VIVO -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-head">
+          <div class="panel-title"><div class="panel-title-dot" style="background:var(--gold)"></div>Vista previa</div>
+        </div>
+        <div style="padding:18px 22px">
+          <div class="config-preview">
+            <div class="config-preview-logo">
+              <div id="prev-logo-fes-wrap" style="display:none">
+                <img id="prev-logo-fes" src="" alt="Logo FES" style="height:36px"/>
+              </div>
+              <div>
+                <div class="config-preview-name" id="prev-nombre">FES Stock</div>
+                <div class="config-preview-sub" id="prev-sub">La Rioja · Gov</div>
+              </div>
+            </div>
+            <div class="config-preview-footer">
+              <div id="prev-logo-org-wrap" style="display:none">
+                <img id="prev-logo-org" src="" alt="Logo Org" style="height:28px"/>
+              </div>
+              <div>
+                <div class="config-preview-org" id="prev-org">Gobierno de La Rioja</div>
+                <div class="config-preview-org"><span id="prev-pie">FES · 2025</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTOS -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-head">
+          <div class="panel-title"><div class="panel-title-dot" style="background:var(--indigo)"></div>Textos del sistema</div>
+        </div>
+        <div style="padding:22px">
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Nombre principal del sistema</label>
+              <input type="text" id="cfg-nombre" placeholder="Ej: FES Stock" oninput="livePreview()"/>
+              <span style="font-size:11px;color:var(--text-3);margin-top:3px">Aparece arriba a la izquierda y en el topbar</span>
+            </div>
+            <div class="form-row">
+              <label>Subtítulo / etiqueta</label>
+              <input type="text" id="cfg-sub" placeholder="Ej: La Rioja · Gov" oninput="livePreview()"/>
+              <span style="font-size:11px;color:var(--text-3);margin-top:3px">Texto pequeño debajo del nombre</span>
+            </div>
+            <div class="form-row">
+              <label>Nombre de la organización</label>
+              <input type="text" id="cfg-org" placeholder="Ej: Gobierno de La Rioja" oninput="livePreview()"/>
+              <span style="font-size:11px;color:var(--text-3);margin-top:3px">Pie del menú lateral</span>
+            </div>
+            <div class="form-row">
+              <label>Texto pie (año / programa)</label>
+              <input type="text" id="cfg-pie" placeholder="Ej: FES · 2025" oninput="livePreview()"/>
+              <span style="font-size:11px;color:var(--text-3);margin-top:3px">Segunda línea del pie del menú</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGOS -->
+      <div class="panel" style="margin-bottom:20px">
+        <div class="panel-head">
+          <div class="panel-title"><div class="panel-title-dot" style="background:var(--teal)"></div>Logos</div>
+        </div>
+        <div style="padding:22px">
+          <div class="config-grid">
+            <!-- Logo FES -->
+            <div>
+              <div class="form-row" style="margin-bottom:10px">
+                <label>Logo del sistema (FES)</label>
+                <span style="font-size:11px;color:var(--text-3)">Se muestra arriba a la izquierda. PNG, SVG o JPG.</span>
+              </div>
+              <div class="config-logo-box" id="cfg-logo-fes-box" onclick="document.getElementById('cfg-logo-fes-input').click()">
+                <img id="cfg-logo-fes-preview" src="" alt="" style="display:none"/>
+                <div id="cfg-logo-fes-placeholder">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <div class="config-logo-label">Hacé clic para subir<br/>el logo del FES</div>
+                  <div class="config-logo-hint">PNG · SVG · JPG — máx. 2MB</div>
+                </div>
+                <button class="config-logo-remove" onclick="removeLogo('fes',event)" title="Quitar logo">✕ Quitar</button>
+              </div>
+              <input type="file" id="cfg-logo-fes-input" accept="image/*" style="display:none" onchange="loadLogo('fes',event)"/>
+            </div>
+            <!-- Logo Organización -->
+            <div>
+              <div class="form-row" style="margin-bottom:10px">
+                <label>Logo de la organización</label>
+                <span style="font-size:11px;color:var(--text-3)">Se muestra en el pie del menú y en los PDF. PNG, SVG o JPG.</span>
+              </div>
+              <div class="config-logo-box" id="cfg-logo-org-box" onclick="document.getElementById('cfg-logo-org-input').click()">
+                <img id="cfg-logo-org-preview" src="" alt="" style="display:none"/>
+                <div id="cfg-logo-org-placeholder">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <div class="config-logo-label">Hacé clic para subir<br/>el logo de la organización</div>
+                  <div class="config-logo-hint">PNG · SVG · JPG — máx. 2MB</div>
+                </div>
+                <button class="config-logo-remove" onclick="removeLogo('org',event)" title="Quitar logo">✕ Quitar</button>
+              </div>
+              <input type="file" id="cfg-logo-org-input" accept="image/*" style="display:none" onchange="loadLogo('org',event)"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
 </div><!-- /app -->
 
@@ -1232,6 +1599,7 @@ function load(){
   if(raw){ try{ const d=JSON.parse(raw); db.categorias=d.categorias||[]; db.productos=d.productos||[]; db.ingresos=d.ingresos||[]; db.salidas=d.salidas||[]; }catch(e){} }
   if(!db.categorias.length) seedData();
   navigate('dashboard');
+  applyConfig();
 
   // Luego buscar la versión más reciente de la nube
   fetch(SHEET_URL)
@@ -1244,6 +1612,7 @@ function load(){
       db.salidas    = d.salidas    || [];
       localStorage.setItem('fes_stock_v3', JSON.stringify(db));
       navigate('dashboard');
+      applyConfig();
       setSyncStatus('ok');
       toast('Datos sincronizados desde la nube ☁','success');
     } else {
@@ -1410,7 +1779,8 @@ function monthName(n){
 // ═══════════════════════════════════════
 const sections={
   dashboard:'Dashboard', productos:'Productos',
-  ingreso:'Registrar Ingreso', salida:'Registrar Salida', reportes:'Reportes'
+  ingreso:'Registrar Ingreso', salida:'Registrar Salida', reportes:'Reportes',
+  config:'Configuración'
 };
 function navigate(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -1421,6 +1791,7 @@ function navigate(id){
   closeSidebar();
   if(id==='dashboard'){refreshDash()}
   if(id==='productos'){renderCatChips();renderProdTable()}
+  if(id==='config'){loadConfigForm()}
   if(id==='ingreso'){refreshFormSelects('ing');renderIngTable();populateDataLists()}
   if(id==='salida'){refreshFormSelects('sal');renderSalTable();populateDataLists()}
   if(id==='reportes'){renderReportes()}
@@ -1725,19 +2096,58 @@ function updateIngreso(){
 function updateSalStock(){
   const prodId=document.getElementById('sal-prod').value;
   const el=document.getElementById('sal-stock-info');
-  if(!prodId){el.style.display='none';return}
+  const warning=document.getElementById('sal-stock-warning');
+  const btn=document.getElementById('btn-registrar-salida');
+  if(!prodId){
+    el.style.display='none';
+    if(warning) warning.style.display='none';
+    if(btn){btn.disabled=false;btn.style.opacity='';}
+    return;
+  }
   const s=getStock(prodId);
   document.getElementById('sal-stock-num').textContent=s;
   document.getElementById('sal-stock-num').style.color=s<=0?'var(--red)':s<=5?'var(--amber)':'var(--teal)';
   el.style.display='flex';
+  // Si el producto no tiene stock, mostrar advertencia inmediatamente
+  if(s<=0 && warning){
+    document.getElementById('sal-warning-msg').innerHTML=
+      `⚠ Este producto no tiene stock disponible. No es posible registrar una salida.`;
+    warning.style.display='flex';
+    if(btn){btn.disabled=true;btn.style.opacity='0.45';btn.style.cursor='not-allowed';}
+  } else {
+    if(warning) warning.style.display='none';
+    if(btn){btn.disabled=false;btn.style.opacity='';btn.style.cursor='';}
+  }
   checkSalQty();
 }
 function checkSalQty(){
   const prodId=document.getElementById('sal-prod').value;
-  if(!prodId) return;
+  const warning=document.getElementById('sal-stock-warning');
+  const btn=document.getElementById('btn-registrar-salida');
+  if(!prodId){
+    if(warning) warning.style.display='none';
+    if(btn){btn.disabled=false;btn.style.opacity='';}
+    return;
+  }
   const s=getStock(prodId);
   const qty=parseInt(document.getElementById('sal-qty').value)||0;
-  document.getElementById('sal-qty').style.borderColor=qty>s?'var(--red)':'';
+  const over = qty > 0 && qty > s;
+  document.getElementById('sal-qty').style.borderColor=over?'var(--red)':'';
+  if(warning){
+    if(over){
+      const falta=qty-s;
+      document.getElementById('sal-warning-msg').innerHTML=
+        `⚠ Cantidad solicitada (<strong>${qty}</strong>) supera el stock disponible (<strong>${s}</strong>). Faltan <strong>${falta}</strong> unidad${falta!==1?'es':''}.`;
+      warning.style.display='flex';
+    } else {
+      warning.style.display='none';
+    }
+  }
+  if(btn){
+    btn.disabled=over;
+    btn.style.opacity=over?'0.45':'';
+    btn.style.cursor=over?'not-allowed':'';
+  }
 }
 function saveSalida(){
   const catId=document.getElementById('sal-cat').value;
@@ -2062,7 +2472,15 @@ function clearForm(prefix){
   document.getElementById(prefix+'-cat').value='';
   const today=new Date().toISOString().split('T')[0];
   document.getElementById(prefix+'-fecha').value=today;
-  if(prefix==='sal') document.getElementById('sal-stock-info').style.display='none';
+  if(prefix==='sal'){
+    document.getElementById('sal-stock-info').style.display='none';
+    const w=document.getElementById('sal-stock-warning');
+    if(w) w.style.display='none';
+    const btn=document.getElementById('btn-registrar-salida');
+    if(btn){btn.disabled=false;btn.style.opacity='';btn.style.cursor='';}
+    const qtyEl=document.getElementById('sal-qty');
+    if(qtyEl) qtyEl.style.borderColor='';
+  }
 }
 function populateDataLists(){
   const lugares=[...new Set([...db.ingresos,...db.salidas].map(x=>x.lugar||x.destino).filter(Boolean))];
@@ -2514,6 +2932,280 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 // ═══════════════════════════════════════
+// TABS INDIVIDUAL / MÚLTIPLE
+// ═══════════════════════════════════════
+function switchFormTab(prefix, tab){
+  ['individual','multi'].forEach(t=>{
+    document.getElementById(`${prefix}-tab-${t}`).classList.toggle('active', t===tab);
+    document.getElementById(`${prefix}-pane-${t}`).classList.toggle('active', t===tab);
+  });
+  if(tab==='multi'){
+    // Inicializar fecha del día y agregar primera fila si está vacía
+    const today=new Date().toISOString().split('T')[0];
+    const fechaEl=document.getElementById(`${prefix}-multi-fecha`);
+    if(fechaEl && !fechaEl.value) fechaEl.value=today;
+    const tbody=document.getElementById(`${prefix}-multi-tbody`);
+    if(tbody && tbody.children.length===0) addMultiRow(prefix);
+  }
+}
+
+// ═══════════════════════════════════════
+// CARGA MÚLTIPLE — ESTADO
+// ═══════════════════════════════════════
+let multiRowId = 0;
+
+function addMultiRow(prefix){
+  const id = ++multiRowId;
+  const tbody = document.getElementById(`${prefix}-multi-tbody`);
+  const tr = document.createElement('tr');
+  tr.id = `${prefix}-mrow-${id}`;
+  tr.dataset.rowid = id;
+
+  // Opciones de categorías
+  const catOpts = `<option value="">Categoría…</option>` +
+    db.categorias.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');
+
+  const stockCol = prefix==='sal'
+    ? `<td><span class="multi-item-stock" id="${prefix}-mstock-${id}" style="color:var(--text-3)">—</span></td>`
+    : '';
+
+  tr.innerHTML = `
+    <td>
+      <select class="multi-item-select" id="${prefix}-mcat-${id}"
+        onchange="onMultiCatChange('${prefix}',${id})">
+        ${catOpts}
+      </select>
+    </td>
+    <td>
+      <select class="multi-item-select" id="${prefix}-mprod-${id}"
+        onchange="onMultiProdChange('${prefix}',${id})">
+        <option value="">— elegí categoría —</option>
+      </select>
+    </td>
+    <td>
+      <input type="number" class="multi-item-qty" id="${prefix}-mqty-${id}"
+        min="1" placeholder="0"
+        oninput="onMultiQtyChange('${prefix}',${id})"/>
+    </td>
+    ${stockCol}
+    <td>
+      <button class="btn btn-ghost btn-sm" onclick="removeMultiRow('${prefix}',${id})" title="Quitar fila"
+        style="color:var(--red);padding:4px 6px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </td>`;
+  tbody.appendChild(tr);
+  updateMultiSummary(prefix);
+}
+
+function removeMultiRow(prefix, id){
+  const tr = document.getElementById(`${prefix}-mrow-${id}`);
+  if(tr) tr.remove();
+  updateMultiSummary(prefix);
+  if(prefix==='sal') checkMultiSalStock();
+}
+
+function onMultiCatChange(prefix, id){
+  const catId = document.getElementById(`${prefix}-mcat-${id}`).value;
+  const prodSel = document.getElementById(`${prefix}-mprod-${id}`);
+  if(!catId){
+    prodSel.innerHTML=`<option value="">— elegí categoría —</option>`;
+    if(prefix==='sal') resetMultiStockBadge(id);
+    return;
+  }
+  const prods = db.productos.filter(p=>p.catId===catId);
+  prodSel.innerHTML = `<option value="">Producto…</option>` +
+    prods.map(p=>`<option value="${p.id}">${p.nombre}</option>`).join('');
+  if(prefix==='sal') resetMultiStockBadge(id);
+}
+
+function onMultiProdChange(prefix, id){
+  if(prefix==='sal'){
+    const prodId = document.getElementById(`sal-mprod-${id}`).value;
+    updateMultiStockBadge(id, prodId);
+    checkMultiSalStock();
+  }
+  updateMultiSummary(prefix);
+}
+
+function onMultiQtyChange(prefix, id){
+  updateMultiSummary(prefix);
+  if(prefix==='sal'){
+    checkMultiSalStock();
+    // Colorear campo según stock
+    const prodId = document.getElementById(`sal-mprod-${id}`).value;
+    const qty = parseInt(document.getElementById(`sal-mqty-${id}`).value)||0;
+    const qtyEl = document.getElementById(`sal-mqty-${id}`);
+    if(prodId && qty>0){
+      const s = getStock(prodId);
+      qtyEl.style.borderColor = qty>s ? 'var(--red)' : '';
+    } else {
+      qtyEl.style.borderColor='';
+    }
+  }
+}
+
+function updateMultiStockBadge(id, prodId){
+  const badge = document.getElementById(`sal-mstock-${id}`);
+  if(!badge) return;
+  if(!prodId){ resetMultiStockBadge(id); return; }
+  const s = getStock(prodId);
+  badge.textContent = s;
+  badge.style.color = s<=0 ? 'var(--red)' : s<=5 ? 'var(--amber)' : 'var(--teal)';
+  badge.style.background = s<=0 ? 'var(--red-light)' : s<=5 ? 'var(--amber-light)' : 'var(--teal-light)';
+}
+
+function resetMultiStockBadge(id){
+  const badge = document.getElementById(`sal-mstock-${id}`);
+  if(badge){ badge.textContent='—'; badge.style.color='var(--text-3)'; badge.style.background='var(--surface-3)'; }
+}
+
+function updateMultiSummary(prefix){
+  const tbody = document.getElementById(`${prefix}-multi-tbody`);
+  if(!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  let count=0, total=0;
+  rows.forEach(tr=>{
+    const rid = tr.dataset.rowid;
+    const prodId = document.getElementById(`${prefix}-mprod-${rid}`)?.value;
+    const qty = parseInt(document.getElementById(`${prefix}-mqty-${rid}`)?.value)||0;
+    if(prodId && qty>0){ count++; total+=qty; }
+  });
+  document.getElementById(`${prefix}-multi-count`).textContent = count;
+  document.getElementById(`${prefix}-multi-total`).textContent = total;
+}
+
+function checkMultiSalStock(){
+  const tbody = document.getElementById('sal-multi-tbody');
+  if(!tbody) return;
+  const rows = tbody.querySelectorAll('tr');
+  const errores = [];
+  rows.forEach(tr=>{
+    const rid = tr.dataset.rowid;
+    const prodId = document.getElementById(`sal-mprod-${rid}`)?.value;
+    const qty = parseInt(document.getElementById(`sal-mqty-${rid}`)?.value)||0;
+    if(prodId && qty>0){
+      const s = getStock(prodId);
+      if(qty>s){
+        const nombre = getProd(prodId).nombre;
+        errores.push(`<strong>${nombre}</strong>: pedís ${qty}, hay ${s}`);
+      }
+    }
+  });
+  const w = document.getElementById('sal-multi-global-warning');
+  const btn = document.getElementById('btn-registrar-multi-salida');
+  if(errores.length){
+    document.getElementById('sal-multi-warning-msg').innerHTML =
+      `Stock insuficiente en ${errores.length} ítem${errores.length>1?'s':''}: ${errores.join(' · ')}`;
+    w.style.display='flex';
+    if(btn){ btn.disabled=true; btn.style.opacity='0.45'; btn.style.cursor='not-allowed'; }
+  } else {
+    w.style.display='none';
+    if(btn){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; }
+  }
+}
+
+function clearMultiForm(prefix){
+  const tbody = document.getElementById(`${prefix}-multi-tbody`);
+  if(tbody) tbody.innerHTML='';
+  ['fecha','lugar','resp','notas','destino','receptor'].forEach(f=>{
+    const el=document.getElementById(`${prefix}-multi-${f}`); if(el) el.value='';
+  });
+  const today=new Date().toISOString().split('T')[0];
+  const fechaEl=document.getElementById(`${prefix}-multi-fecha`);
+  if(fechaEl) fechaEl.value=today;
+  if(prefix==='sal'){
+    const w=document.getElementById('sal-multi-global-warning');
+    if(w) w.style.display='none';
+    const btn=document.getElementById('btn-registrar-multi-salida');
+    if(btn){ btn.disabled=false; btn.style.opacity=''; btn.style.cursor=''; }
+  }
+  updateMultiSummary(prefix);
+  addMultiRow(prefix);
+}
+
+// ═══════════════════════════════════════
+// GUARDAR CARGA MÚLTIPLE — INGRESO
+// ═══════════════════════════════════════
+function saveMultiIngreso(){
+  const fecha   = document.getElementById('ing-multi-fecha').value;
+  const lugar   = document.getElementById('ing-multi-lugar').value.trim();
+  const resp    = document.getElementById('ing-multi-resp').value.trim();
+  const notas   = document.getElementById('ing-multi-notas').value.trim();
+  if(!fecha){ toast('Ingresá la fecha','warning'); return; }
+
+  const tbody = document.getElementById('ing-multi-tbody');
+  const rows  = tbody.querySelectorAll('tr');
+  const items = [];
+  let hasError = false;
+
+  rows.forEach(tr=>{
+    const rid    = tr.dataset.rowid;
+    const prodId = document.getElementById(`ing-mprod-${rid}`)?.value;
+    const qty    = parseInt(document.getElementById(`ing-mqty-${rid}`)?.value)||0;
+    const catId  = document.getElementById(`ing-mcat-${rid}`)?.value;
+    if(!prodId && !qty) return; // fila vacía → ignorar
+    if(!prodId){ toast('Hay filas sin producto seleccionado','warning'); hasError=true; return; }
+    if(!qty||qty<1){ toast('Hay filas sin cantidad válida','warning'); hasError=true; return; }
+    items.push({prodId, catId, qty});
+  });
+
+  if(hasError) return;
+  if(!items.length){ toast('Agregá al menos un ítem','warning'); return; }
+
+  items.forEach(item=>{
+    db.ingresos.push({id:uid(), prodId:item.prodId, catId:item.catId,
+      qty:item.qty, fecha, lugar, resp, notas});
+  });
+
+  save(); clearMultiForm('ing'); renderIngTable(); refreshDash(); populateDataLists();
+  toast(`${items.length} ingreso${items.length>1?'s registrados':' registrado'} ✓`, 'success');
+}
+
+// ═══════════════════════════════════════
+// GUARDAR CARGA MÚLTIPLE — SALIDA
+// ═══════════════════════════════════════
+function saveMultiSalida(){
+  const fecha    = document.getElementById('sal-multi-fecha').value;
+  const destino  = document.getElementById('sal-multi-destino').value.trim();
+  const resp     = document.getElementById('sal-multi-resp').value.trim();
+  const receptor = document.getElementById('sal-multi-receptor').value.trim();
+  const notas    = document.getElementById('sal-multi-notas').value.trim();
+  if(!fecha){ toast('Ingresá la fecha','warning'); return; }
+
+  const tbody = document.getElementById('sal-multi-tbody');
+  const rows  = tbody.querySelectorAll('tr');
+  const items = [];
+  let hasError = false;
+
+  rows.forEach(tr=>{
+    const rid    = tr.dataset.rowid;
+    const prodId = document.getElementById(`sal-mprod-${rid}`)?.value;
+    const qty    = parseInt(document.getElementById(`sal-mqty-${rid}`)?.value)||0;
+    const catId  = document.getElementById(`sal-mcat-${rid}`)?.value;
+    if(!prodId && !qty) return;
+    if(!prodId){ toast('Hay filas sin producto seleccionado','warning'); hasError=true; return; }
+    if(!qty||qty<1){ toast('Hay filas sin cantidad válida','warning'); hasError=true; return; }
+    const s=getStock(prodId);
+    if(qty>s){ toast(`Stock insuficiente para "${getProd(prodId).nombre}"`, 'error'); hasError=true; return; }
+    items.push({prodId, catId, qty});
+  });
+
+  if(hasError) return;
+  if(!items.length){ toast('Agregá al menos un ítem','warning'); return; }
+
+  items.forEach(item=>{
+    db.salidas.push({id:uid(), prodId:item.prodId, catId:item.catId,
+      qty:item.qty, fecha, destino, resp, receptor, notas});
+  });
+
+  save(); clearMultiForm('sal'); renderSalTable(); refreshDash(); populateDataLists();
+  toast(`${items.length} salida${items.length>1?'s registradas':' registrada'} ✓`, 'success');
+}
+
+// ═══════════════════════════════════════
 // BÚSQUEDA GLOBAL
 // ═══════════════════════════════════════
 function onGlobalSearch(){
@@ -2579,6 +3271,135 @@ document.addEventListener('click',e=>{
   const wrap=document.getElementById('global-search-wrap');
   if(wrap&&!wrap.contains(e.target)) document.getElementById('global-results').style.display='none';
 });
+
+// ═══════════════════════════════════════
+// CONFIGURACIÓN
+// ═══════════════════════════════════════
+function loadConfigForm(){
+  const cfg = db.config || {};
+  document.getElementById('cfg-nombre').value  = cfg.nombre  || 'FES Stock';
+  document.getElementById('cfg-sub').value     = cfg.sub     || 'La Rioja · Gov';
+  document.getElementById('cfg-org').value     = cfg.org     || 'Gobierno de La Rioja';
+  document.getElementById('cfg-pie').value     = cfg.pie     || 'FES · 2025';
+  // Logos
+  setLogoBox('fes', cfg.logoFes || '');
+  setLogoBox('org', cfg.logoOrg || '');
+  livePreview();
+}
+function setLogoBox(which, dataUrl){
+  const box      = document.getElementById(`cfg-logo-${which}-box`);
+  const preview  = document.getElementById(`cfg-logo-${which}-preview`);
+  const holder   = document.getElementById(`cfg-logo-${which}-placeholder`);
+  if(dataUrl){
+    preview.src = dataUrl;
+    preview.style.display = 'block';
+    holder.style.display  = 'none';
+    box.classList.add('has-logo');
+  } else {
+    preview.src = '';
+    preview.style.display = 'none';
+    holder.style.display  = 'flex';
+    holder.style.flexDirection = 'column';
+    holder.style.alignItems    = 'center';
+    holder.style.gap           = '8px';
+    box.classList.remove('has-logo');
+  }
+}
+function loadLogo(which, event){
+  const file = event.target.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){ toast('El archivo supera los 2MB','warning'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    if(!db.config) db.config={};
+    if(which==='fes') db.config.logoFes = e.target.result;
+    else              db.config.logoOrg = e.target.result;
+    setLogoBox(which, e.target.result);
+    livePreview();
+  };
+  reader.readAsDataURL(file);
+  event.target.value=''; // reset input para poder volver a subir mismo archivo
+}
+function removeLogo(which, e){
+  e.stopPropagation();
+  if(!db.config) db.config={};
+  if(which==='fes') db.config.logoFes='';
+  else              db.config.logoOrg='';
+  setLogoBox(which,'');
+  livePreview();
+}
+function livePreview(){
+  const nombre = document.getElementById('cfg-nombre').value || 'FES Stock';
+  const sub    = document.getElementById('cfg-sub').value    || 'La Rioja · Gov';
+  const org    = document.getElementById('cfg-org').value    || 'Gobierno de La Rioja';
+  const pie    = document.getElementById('cfg-pie').value    || 'FES · 2025';
+  document.getElementById('prev-nombre').textContent = nombre;
+  document.getElementById('prev-sub').textContent    = sub;
+  document.getElementById('prev-org').textContent    = org;
+  document.getElementById('prev-pie').textContent    = pie;
+  // Preview logos
+  const logoFes = db.config?.logoFes;
+  const logoOrg = db.config?.logoOrg;
+  const fesWrap = document.getElementById('prev-logo-fes-wrap');
+  const orgWrap = document.getElementById('prev-logo-org-wrap');
+  if(logoFes){ document.getElementById('prev-logo-fes').src=logoFes; fesWrap.style.display='block'; }
+  else { fesWrap.style.display='none'; }
+  if(logoOrg){ document.getElementById('prev-logo-org').src=logoOrg; orgWrap.style.display='block'; }
+  else { orgWrap.style.display='none'; }
+}
+function saveConfig(){
+  if(!db.config) db.config={};
+  db.config.nombre = document.getElementById('cfg-nombre').value.trim() || 'FES Stock';
+  db.config.sub    = document.getElementById('cfg-sub').value.trim()    || 'La Rioja · Gov';
+  db.config.org    = document.getElementById('cfg-org').value.trim()    || 'Gobierno de La Rioja';
+  db.config.pie    = document.getElementById('cfg-pie').value.trim()    || 'FES · 2025';
+  save();
+  applyConfig();
+  toast('Configuración guardada ✓','success');
+}
+function applyConfig(){
+  const cfg = db.config || {};
+  const nombre = cfg.nombre || 'FES Stock';
+  const sub    = cfg.sub    || 'La Rioja · Gov';
+  const org    = cfg.org    || 'Gobierno de La Rioja';
+  const pie    = cfg.pie    || 'FES · 2025';
+  // Sidebar logo text
+  const logoText = document.querySelector('.logo-text');
+  if(logoText){
+    logoText.childNodes[0].textContent = nombre;
+    const span = logoText.querySelector('span');
+    if(span) span.textContent = sub;
+  }
+  // Sidebar logo icon — reemplazar con imagen si hay, o volver al SVG
+  const logoIcon = document.querySelector('.logo-icon');
+  if(logoIcon){
+    if(cfg.logoFes){
+      logoIcon.innerHTML = `<img src="${cfg.logoFes}" style="width:28px;height:28px;object-fit:contain;border-radius:5px"/>`;
+    } else {
+      logoIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:18px;height:18px;color:var(--gold)"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`;
+    }
+  }
+  // Sidebar footer
+  const orgAvatar = document.querySelector('.org-avatar');
+  if(orgAvatar){
+    if(cfg.logoOrg){
+      orgAvatar.innerHTML = `<img src="${cfg.logoOrg}" style="width:28px;height:28px;object-fit:contain;border-radius:5px"/>`;
+      orgAvatar.style.background='transparent';
+      orgAvatar.style.border='none';
+    } else {
+      const initials = org.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      orgAvatar.textContent = initials;
+      orgAvatar.style.background='';
+      orgAvatar.style.border='';
+    }
+  }
+  const orgName = document.querySelector('.org-name');
+  if(orgName) orgName.textContent = org;
+  const orgSub = document.querySelector('.org-sub');
+  if(orgSub) orgSub.textContent = pie;
+  // Title bar
+  document.title = `${nombre} · Sistema de Stock`;
+}
 
 // ═══════════════════════════════════════
 // INIT
